@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     opus: 'audio/opus',
     aac:  'audio/aac',
     m4a:  'audio/mp4',
+    webm: 'audio/webm',
   }
   var exts = [];
   for(var ext in contenttypes) exts.push(ext);
