@@ -1,0 +1,11 @@
+SimplePlaylist
+Copyright (c) 2024 Petko Yotov
+MIT License
+
+A PmWiki extension that generates a simple audio player 
+from an ordered list in a wiki page.
+
+Please find documentation at:
+
+  https://www.pmwiki.org/Cookbook/SimplePlaylist
+

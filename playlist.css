@@ -1,0 +1,80 @@
+/** 
+  SimplePlaylist: Audio player from a list
+  Copyright (c) 2024 Petko Yotov
+  MIT License
+  https://www.pmwiki.org/Cookbook/SimplePlaylist
+*/
+
+ol.playlist {
+  border: 4px solid var(--sp-bordercolor);
+  max-height: calc(100vh - 3em);
+  overflow-y: auto;
+  counter-reset: li;
+  list-style: none;
+  padding: 0;
+
+  --sp-bordercolor: #999;
+  --sp-current-bgcolor: #ddd;
+  --sp-hover-bgcolor: #dfd;
+}
+
+html.pmDarkTheme ol.playlist {
+  --sp-bordercolor: #333;
+  --sp-current-bgcolor: #222;
+  --sp-hover-bgcolor: #0f2b13;
+}
+
+ol.playlist > li.track::before {
+  content: counter(li) ". " ;
+  counter-increment: li;
+  display: inline-block;
+  width: 3em;
+  margin-right: .4em;
+  text-align: right;
+}
+
+ol.playlist li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: .2rem .2rem .2rem 0;
+}
+
+ol.playlist li:not(:last-child) {
+  border-bottom: 1px solid var(--sp-bordercolor)
+}
+
+ol.playlist li.track {
+  cursor: pointer;
+}
+
+ol.playlist li:not(.track) {
+  opacity: .67;
+}
+
+ol.playlist > li.track.current::before {
+  content: '\25B6';
+/*   content: '\25B8'; */
+  font-weight: normal;
+  
+}
+
+
+ol.playlist li.track:hover {
+  background-color: var(--sp-hover-bgcolor);
+}
+ol.playlist li.track.current {
+  background-color: var(--sp-current-bgcolor);
+  font-weight: bold;
+}
+
+
+ol.playlist li.track a {
+  color: inherit;
+  text-decoration: none;
+}
+
+audio.SimplePlaylist {
+  width: 100%;
+  height: 2em;
+}
