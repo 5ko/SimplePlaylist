@@ -16,12 +16,14 @@ ol.playlist {
   --sp-bordercolor: #999;
   --sp-current-bgcolor: #ddd;
   --sp-hover-bgcolor: #dfd;
+  --sp-error-color: #800;
 }
 
 html.pmDarkTheme ol.playlist {
   --sp-bordercolor: #333;
   --sp-current-bgcolor: #222;
   --sp-hover-bgcolor: #0f2b13;
+  --sp-error-color: #ff906b;
 }
 
 ol.playlist > li.track::before {
@@ -40,6 +42,10 @@ ol.playlist li {
   padding: .2rem .2rem .2rem 0;
 }
 
+ol.playlist li.error {
+  color: var(--sp-error-color);
+}
+
 ol.playlist li:not(:last-child) {
   border-bottom: 1px solid var(--sp-bordercolor)
 }
@@ -54,9 +60,12 @@ ol.playlist li:not(.track) {
 
 ol.playlist > li.track.current::before {
   content: '\25B6';
-/*   content: '\25B8'; */
   font-weight: normal;
   
+}
+
+ol.playlist > li.track.error::before {
+  content: '\26A0';  
 }
 
 

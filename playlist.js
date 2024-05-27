@@ -76,22 +76,28 @@ document.addEventListener('DOMContentLoaded', function() {
       if(endsec == currsec) audio.dispatchEvent(new Event('ended'));
     });
     
+    audio.addEventListener('error', function(e) {
+      ol.querySelector('li.track.current').classList.add('error');
+      audio.dispatchEvent(new Event('ended'));
+    });
+    
     audio.addEventListener('ended', function(e) {
       if(!ol.classList.contains('autonext')) return;
-      currentTrack+=1;
+      currentTrack++;
       if(ol.classList.contains('loop')) currentTrack %= tracks.length;
       playtrack();
     });
     
     function playtrack() {
       if(currentTrack>=tracks.length) return;
-      audio.src = tracks[currentTrack];
-      audio.load();
-      audio.play();
+                          
       ol.querySelector('li.track.current').classList.remove('current');
       var currentitem = ol.querySelector('li.track[data-tracknb="'+currentTrack+'"]')
       currentitem.classList.add('current');
       
+      audio.src = tracks[currentTrack];
+      audio.load();
+      audio.play().catch(function(error) { /*on error play next*/ });
       var cs = window.getComputedStyle(ol);
       if(ol.clientHeight < ol.scrollHeight) // only if taller than container
         currentitem.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
