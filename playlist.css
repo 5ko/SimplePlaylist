@@ -5,7 +5,7 @@
   https://www.pmwiki.org/Cookbook/SimplePlaylist
 */
 
-ol.playlist {
+ol.SimplePlaylist {
   border: 4px solid var(--sp-bordercolor);
   max-height: calc(100vh - 3em);
   overflow-y: auto;
@@ -19,14 +19,14 @@ ol.playlist {
   --sp-error-color: #800;
 }
 
-html.pmDarkTheme ol.playlist {
+html.pmDarkTheme ol.SimplePlaylist {
   --sp-bordercolor: #333;
   --sp-current-bgcolor: #222;
   --sp-hover-bgcolor: #0f2b13;
   --sp-error-color: #ff906b;
 }
 
-ol.playlist > li.track::before {
+ol.SimplePlaylist > li.track::before {
   content: counter(li) ". " ;
   counter-increment: li;
   display: inline-block;
@@ -35,50 +35,50 @@ ol.playlist > li.track::before {
   text-align: right;
 }
 
-ol.playlist li {
+ol.SimplePlaylist li {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: .2rem .2rem .2rem 0;
 }
 
-ol.playlist li.error {
+ol.SimplePlaylist li.error {
   color: var(--sp-error-color);
 }
 
-ol.playlist li:not(:last-child) {
+ol.SimplePlaylist li:not(:last-child) {
   border-bottom: 1px solid var(--sp-bordercolor)
 }
 
-ol.playlist li.track {
+ol.SimplePlaylist li.track {
   cursor: pointer;
 }
 
-ol.playlist li:not(.track) {
+ol.SimplePlaylist li:not(.track) {
   opacity: .67;
 }
 
-ol.playlist > li.track.current::before {
+ol.SimplePlaylist > li.track.current::before {
   content: '\25B6';
   font-weight: normal;
   
 }
 
-ol.playlist > li.track.error::before {
+ol.SimplePlaylist > li.track.error::before {
   content: '\26A0';  
 }
 
 
-ol.playlist li.track:hover {
+ol.SimplePlaylist li.track:hover {
   background-color: var(--sp-hover-bgcolor);
 }
-ol.playlist li.track.current {
+ol.SimplePlaylist li.track.current {
   background-color: var(--sp-current-bgcolor);
   font-weight: bold;
 }
 
 
-ol.playlist li.track a {
+ol.SimplePlaylist li.track a {
   color: inherit;
   text-decoration: none;
 }

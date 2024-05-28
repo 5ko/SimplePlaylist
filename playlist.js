@@ -7,20 +7,8 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   var echo = console.log;
-  var contenttypes = {
-    flac: 'audio/x-flac',
-    wav:  'audio/x-wav',
-    mp3:  'audio/mpeg',
-    ogg:  'audio/ogg',
-    oga:  'audio/ogg',
-    opus: 'audio/opus',
-    aac:  'audio/aac',
-    m4a:  'audio/mp4',
-    webm: 'audio/webm',
-  }
-  var exts = [];
-  for(var ext in contenttypes) exts.push(ext);
-  var extRX = new RegExp('\\.('+exts.join('|') + ')(?:[#]t=[\\d.,]+)?$', 'i');
+  var extRX = /\.(flac|wav|mp3|ogg|oga|opus|aac|m4a|webm)(?:[#]t=[\d.,]+)?$/i;
+  
   
   function shuffle(x) {
     x.sort(function() { return Math.random() - 0.5});
@@ -53,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if(!tracks.length) return;
+    ol.classList.add('SimplePlaylist');
     
     var notracks = ol.querySelectorAll('li:not(.track,.divider)');
     for(var li of notracks) ol.appendChild(li);
@@ -63,7 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
     audio.setAttribute('controls', 'controls');
     if(ol.classList.contains('autoplay'))
       audio.setAttribute('autoplay', 'autoplay');
-    ol.insertAdjacentElement('beforebegin', audio);
+    var prev = ol.previousElementSibling;
+    if(prev && prev.dataset.jets)
+      prev.insertAdjacentElement('beforebegin', audio);
+    else
+      ol.insertAdjacentElement('beforebegin', audio);
+
     audio.src = tracks[0];
     ol.querySelector('li.track').classList.add('current');
     
@@ -90,6 +84,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function playtrack() {
+      var prev = ol.previousElementSibling;
+      if(prev && prev.dataset.jets && prev.value !== '') {
+        prev.value = '';
+        prev.dispatchEvent(new Event('input'));
+      }
       if(currentTrack>=tracks.length) return;
                           
       ol.querySelector('li.track.current').classList.remove('current');
@@ -99,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
       audio.src = tracks[currentTrack];
       audio.load();
       audio.play().catch(function(error) { /*on error play next*/ });
-      var cs = window.getComputedStyle(ol);
       if(ol.clientHeight < ol.scrollHeight) // only if taller than container
         currentitem.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
     }
