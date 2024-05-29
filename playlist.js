@@ -10,14 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var extRX = /\.(flac|wav|mp3|ogg|oga|opus|aac|m4a|webm)(?:[#]t=[\d.,]+)?$/i;
   
   
-  function shuffle(x) {
-    x.sort(function() { return Math.random() - 0.5});
+  function shuffleElArray(x) {
+    for(var a of x) a.rndsort = Math.random();
+    x.sort(function(a, b) { return a.rndsort - b.rndsort });
   }
   
   function makePagelist(ol) {    
     var items = Array.from(ol.children);
     if(ol.classList.contains('shuffle')) {
-      shuffle(items);
+      shuffleElArray(items);
       for(var item of items) {
         ol.appendChild(item);
       }
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
       li.classList.add('track');
       li.dataset.tracknb = tracks.length;
       tracks.push(href);
+      li.dataset.counter = tracks.length;
     }
     
     if(!tracks.length) return;

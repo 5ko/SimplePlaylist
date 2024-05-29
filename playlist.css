@@ -27,8 +27,7 @@ html.pmDarkTheme ol.SimplePlaylist {
 }
 
 ol.SimplePlaylist > li.track::before {
-  content: counter(li) ". " ;
-  counter-increment: li;
+  content: attr(data-counter) ". " ;
   display: inline-block;
   width: 3em;
   margin-right: .4em;
