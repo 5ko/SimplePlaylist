@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     var tracks = [];
-    var nbtracks = 0;
     for(var li of items) {
       var a = li.querySelector('a');
       if(!a) continue;
@@ -116,6 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
   }
-  var playlists = document.querySelectorAll('ol.playlist,ol.SimplePlaylist');
+  var playlists = document.querySelectorAll('ol.playlist,ol.simpleplaylist,ol.SimplePlaylist');
   for(var ol of playlists) makePagelist(ol);
 });

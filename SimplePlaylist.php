@@ -6,6 +6,6 @@
   https://www.pmwiki.org/Cookbook/SimplePlaylist
 */
 
-$RecipeInfo['SimplePlaylist']['Version'] = '2024-05-29';
+$RecipeInfo['SimplePlaylist']['Version'] = '2024-05-29a';
 
 extAddHeaderResource('playlist.css playlist.js');
