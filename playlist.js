@@ -95,9 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
       playtrack();
     });
     
-    function playtrack() {
+    audio.addEventListener('play', function(e) {
       var all_audios = document.querySelectorAll('audio.simpleplaylist');
-      for(var el of all_audios) el.pause();
+      for(var el of all_audios) if(el !== audio) el.pause();
+    });
+    
+    function playtrack() {
       var prev = ol.previousElementSibling;
       if(prev && prev.dataset.jets && prev.value !== '') {
         prev.value = '';
