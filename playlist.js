@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var href = a.href;
       
       // ignore links that are not audio files
-      if(a.className.match(/createlink/)) continue; 
+      if(a.className.match(/createlink/)) continue;
       if(href.match(/action=upload/)) continue;
       var m = href.match(extRX);
       if(! m) continue;
@@ -96,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function playtrack() {
+      var all_audios = document.querySelectorAll('audio.simpleplaylist');
+      for(var el of all_audios) el.pause();
       var prev = ol.previousElementSibling;
       if(prev && prev.dataset.jets && prev.value !== '') {
         prev.value = '';
