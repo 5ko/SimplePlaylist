@@ -5,17 +5,28 @@
   https://www.pmwiki.org/Cookbook/SimplePlaylist
 */
 
+var SimplePlaylistOptions = document.currentScript.dataset.options;
 document.addEventListener('DOMContentLoaded', function() {
   var echo = console.log;
   var extRX = /\.(flac|wav|mp3|ogg|oga|opus|aac|m4a|webm)(?:[#]t=[\d.,]+)?$/i;
+  if(SimplePlaylistOptions)
+    SimplePlaylistOptions = JSON.parse(SimplePlaylistOptions);
   
+  var autoplay_count = 0;
   
   function shuffleElArray(x) {
     for(var a of x) a.rndsort = Math.random();
     x.sort(function(a, b) { return a.rndsort - b.rndsort });
   }
   
-  function makePagelist(ol) {    
+  function makePagelist(ol) {
+    if(SimplePlaylistOptions) {
+      for(var o of SimplePlaylistOptions) {
+        if(ol.classList.contains('x'+o)) continue;
+        ol.classList.add(o);
+      }
+    }
+    
     var items = Array.from(ol.children);
     if(ol.classList.contains('shuffle')) {
       shuffleElArray(items);
@@ -42,16 +53,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if(!tracks.length) return;
-    ol.classList.add('SimplePlaylist');
+    ol.classList.add('simpleplaylist');
     
     var notracks = ol.querySelectorAll('li:not(.track,.divider)');
     for(var li of notracks) ol.appendChild(li);
     
     var audio = document.createElement('audio');
-    audio.className = 'SimplePlaylist';
+    audio.className = 'simpleplaylist';
     audio.setAttribute('preload', 'metadata');
     audio.setAttribute('controls', 'controls');
-    if(ol.classList.contains('autoplay'))
+    if(ol.classList.contains('autoplay') && ! autoplay_count++)
       audio.setAttribute('autoplay', 'autoplay');
     var prev = ol.previousElementSibling;
     if(prev && prev.dataset.jets)
@@ -91,14 +102,22 @@ document.addEventListener('DOMContentLoaded', function() {
         prev.dispatchEvent(new Event('input'));
       }
       if(currentTrack>=tracks.length) return;
-                          
-      ol.querySelector('li.track.current').classList.remove('current');
-      var currentitem = ol.querySelector('li.track[data-tracknb="'+currentTrack+'"]')
-      currentitem.classList.add('current');
+      if(audio.src == tracks[currentTrack]) {
+        var a = tracks[currentTrack].match(/[#]t=([\d.]+)/);
+        start = a? parseFloat(a[1]) : 0;
+        audio.currentTime = start;
+      }
+      else {
+        ol.querySelector('li.track.current').classList.remove('current');
+        var currentitem = ol.querySelector('li.track[data-tracknb="'+currentTrack+'"]')
+        currentitem.classList.add('current');
+        audio.src = tracks[currentTrack];
+        audio.load();
+      }
       
-      audio.src = tracks[currentTrack];
-      audio.load();
-      audio.play().catch(function(error) { /*on error play next*/ });
+      audio.play()
+        .then(function(){currentitem.classList.remove('error');})
+        .catch(function(error) { /*on error play next*/ });
       if(ol.clientHeight < ol.scrollHeight) // only if taller than container
         currentitem.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
     }

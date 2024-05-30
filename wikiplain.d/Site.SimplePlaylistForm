@@ -1,0 +1,21 @@
+>>frame<<
+$[Summary]: Simple audio player with a playlist\\
+$[Version]: {$ExtVersion}\\
+$[Cookbook]: [[(Cookbook:){$ExtName}]]\\
+$[Maintainer]: [[https://www.pmwiki.org/petko|Petko]]
+>><<
+[[#form]]
+
+Options enabled even when not in the wiki markup:
+
+(:input checkbox options[] shuffle "shuffle: randomize the playlist on page load":)
+
+(:input checkbox options[] numbered "numbered: show track numbers":)
+
+(:input checkbox options[] autoplay "autoplay: start playing as soon as the page is loaded":) (may not work in all browsers)
+
+(:input checkbox options[] autonext "autonext: when a track ends, start playing the next one":)
+
+(:input checkbox options[] loop "loop: when the last track ends, start playing the first one":)
+
+[[#formend]]

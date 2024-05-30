@@ -5,7 +5,7 @@
   https://www.pmwiki.org/Cookbook/SimplePlaylist
 */
 
-ol.SimplePlaylist {
+ol.simpleplaylist {
   border: 4px solid var(--sp-bordercolor);
   max-height: calc(100vh - 3em);
   overflow-y: auto;
@@ -14,19 +14,21 @@ ol.SimplePlaylist {
   padding: 0;
 
   --sp-bordercolor: #999;
+  --sp-current-color: #37a;
   --sp-current-bgcolor: #ddd;
   --sp-hover-bgcolor: #dfd;
   --sp-error-color: #800;
 }
 
-html.pmDarkTheme ol.SimplePlaylist {
+html.pmDarkTheme ol.simpleplaylist {
   --sp-bordercolor: #333;
+  --sp-current-color: #74b0e7;
   --sp-current-bgcolor: #222;
   --sp-hover-bgcolor: #0f2b13;
   --sp-error-color: #ff906b;
 }
 
-ol.SimplePlaylist > li.track::before {
+ol.simpleplaylist.numbered > li.track::before {
   content: attr(data-counter) ". " ;
   display: inline-block;
   width: 3em;
@@ -34,55 +36,56 @@ ol.SimplePlaylist > li.track::before {
   text-align: right;
 }
 
-ol.SimplePlaylist li {
+ol.simpleplaylist li {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: .2rem .2rem .2rem 0;
+  padding: .2em .4em;
 }
 
-ol.SimplePlaylist li.error {
+ol.simpleplaylist li.error {
   color: var(--sp-error-color);
 }
 
-ol.SimplePlaylist li:not(:last-child) {
+ol.simpleplaylist li:not(:last-child) {
   border-bottom: 1px solid var(--sp-bordercolor)
 }
 
-ol.SimplePlaylist li.track {
+ol.simpleplaylist li.track {
   cursor: pointer;
 }
 
-ol.SimplePlaylist li:not(.track) {
+ol.simpleplaylist li:not(.track) {
   opacity: .67;
 }
 
-ol.SimplePlaylist > li.track.current::before {
+ol.simpleplaylist.numbered > li.track.current::before {
   content: '\25B6';
   font-weight: normal;
   
 }
 
-ol.SimplePlaylist > li.track.error::before {
+ol.simpleplaylist > li.track.error::before {
   content: '\26A0';  
 }
 
 
-ol.SimplePlaylist li.track:hover {
+ol.simpleplaylist li.track:hover {
   background-color: var(--sp-hover-bgcolor);
 }
-ol.SimplePlaylist li.track.current {
+ol.simpleplaylist li.track.current {
+  color: var(--sp-current-color);
   background-color: var(--sp-current-bgcolor);
   font-weight: bold;
 }
 
 
-ol.SimplePlaylist li.track a {
+ol.simpleplaylist li.track a {
   color: inherit;
   text-decoration: none;
 }
 
-audio.SimplePlaylist {
+audio.simpleplaylist {
   width: 100%;
   height: 2em;
 }
